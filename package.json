@@ -11,8 +11,56 @@
   "module": "dist/unjam.mjs",
   "exports": {
     ".": {
-      "import": "./dist/unjam.js",
-      "require": "./dist/unjam.umd.cjs"
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    },
+    "./every": {
+      "require": "./dist/every/index.cjs",
+      "import": "./dist/every/index.mjs"
+    },
+    "./executeCooperative": {
+      "require": "./dist/executeCooperative/index.cjs",
+      "import": "./dist/executeCooperative/index.mjs"
+    },
+    "./filter": {
+      "require": "./dist/filter/index.cjs",
+      "import": "./dist/filter/index.mjs"
+    },
+    "./find": {
+      "require": "./dist/find/index.cjs",
+      "import": "./dist/find/index.mjs"
+    },
+    "./flatMap": {
+      "require": "./dist/flatMap/index.cjs",
+      "import": "./dist/flatMap/index.mjs"
+    },
+    "./forEach": {
+      "require": "./dist/forEach/index.cjs",
+      "import": "./dist/forEach/index.mjs"
+    },
+    "./groupBy": {
+      "require": "./dist/groupBy/index.cjs",
+      "import": "./dist/groupBy/index.mjs"
+    },
+    "./map": {
+      "require": "./dist/map/index.cjs",
+      "import": "./dist/map/index.mjs"
+    },
+    "./partition": {
+      "require": "./dist/partition/index.cjs",
+      "import": "./dist/partition/index.mjs"
+    },
+    "./reduce": {
+      "require": "./dist/reduce/index.cjs",
+      "import": "./dist/reduce/index.mjs"
+    },
+    "./some": {
+      "require": "./dist/some/index.cjs",
+      "import": "./dist/some/index.mjs"
+    },
+    "./zip": {
+      "require": "./dist/zip/index.cjs",
+      "import": "./dist/zip/index.mjs"
     }
   },
   "scripts": {

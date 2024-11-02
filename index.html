@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+  </head>
+  <body>
+    <div id="app">
+      <button id="btn-cooperative">Cooperative</button>
+      <button id="btn-non-cooperative">Non-Cooperative</button>
+    </div>
+    <script type="module" src="/src/index.ts"></script>
+    <script type="module">
+      import { forEach, config } from "unjam";
+
+      const array = Array.from({ length: 100_000_000 }, (_, i) => i);
+      const callbackFn = () => {};
+
+      document
+        .getElementById("btn-cooperative")
+        .addEventListener("click", async () => {
+          console.log("Button clicked");
+          document.getElementById("btn-cooperative").disabled = true;
+          await forEach(array, callbackFn);
+          document.getElementById("btn-cooperative").disabled = false;
+          console.log("Done");
+        });
+
+      document
+        .getElementById("btn-non-cooperative")
+        .addEventListener("click", () => {
+          console.log("Button clicked");
+          document.getElementById("btn-non-cooperative").disabled = true;
+          array.forEach(callbackFn);
+          document.getElementById("btn-non-cooperative").disabled = false;
+          console.log("Done");
+        });
+    </script>
+  </body>
+</html>
