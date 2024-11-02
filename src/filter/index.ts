@@ -1,5 +1,18 @@
 import { executeCooperative } from "../executeCooperative";
 
+/**
+ * Creates a new array with all elements that pass the test implemented by the provided function.
+ * @param array - The array to iterate over.
+ * @param callbackfn - A function that accepts up to three arguments. The filter method calls the callbackfn function one time for each element in the array.
+ * @returns A Promise that resolves with a new array with the elements that pass the test.
+ *
+ * @example
+ * ```ts
+ * const array = [1, 30, 39, 29, 10, 13];
+ * const result = await filter(array, (value) => value < 30);
+ * console.log(result); // Output: [1, 29, 10, 13]
+ * ```
+ */
 export const filter = async <T>(
   array: T[],
   callbackfn: (value: T, index: number, array: T[]) => boolean

@@ -1,5 +1,18 @@
 import { executeCooperative } from "../executeCooperative";
 
+/**
+ * Calls a defined callback function on each element of an array, and then flattens the result into a new array.
+ * @param array - The array to iterate over.
+ * @param callbackfn - A function that accepts up to three arguments. The flatMap method calls the callbackfn function one time for each element in the array.
+ * @returns A Promise that resolves with a new array with the results of calling a provided function on every element in the calling array and flattening the result into a new array.
+ *
+ * @example
+ * ```ts
+ * const array = [1, 2, 3, 4];
+ * const result = await flatMap(array, (value) => [value, value * 2]);
+ * console.log(result); // Output: [1, 2, 2, 4, 3, 6, 4, 8]
+ * ```
+ */
 export const flatMap = async <T, U>(
   array: T[],
   callbackfn: (value: T, index: number, array: T[]) => U[]

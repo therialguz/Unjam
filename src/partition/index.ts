@@ -1,5 +1,17 @@
 import { executeCooperative } from "../executeCooperative";
 
+/**
+ *
+ * @param array - The array to iterate over.
+ * @param callbackfn - A function that accepts up to three arguments. The partition method calls the callbackfn function one time for each element in the array.
+ * @returns A Promise that resolves with an array containing two arrays: the first array contains the elements that satisfy the condition, and the second array contains the elements that do not satisfy the condition.
+ *
+ * @example
+ * ```ts
+ * const array = [1, 2, 3, 4];
+ * const result = await partition(array, (value) => value > 2);
+ * console.log(result); // Output: [[3, 4], [1, 2]]
+ */
 export const partition = async <T>(
   array: T[],
   callbackfn: (value: T, index: number, array: T[]) => boolean

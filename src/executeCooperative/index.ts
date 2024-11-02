@@ -2,6 +2,20 @@ import { config } from "../config";
 
 let currentCooperation: [starter: Symbol, started: number] | null = null;
 
+/**
+ * Calls a defined callback function on each element of an array and resolves a Promise when the loop is finished.
+ *
+ * The executeCooperative method calls the callbackfn function one time for each element in the array. The loop is cooperative and will pause execution if it takes too long.
+ * Please note that the loop will not pause in the middle of an iteration, only between iterations.
+ *
+ * @internal
+ *
+ * @param array - The array to iterate over.
+ * @param from - The index to start iterating from.
+ * @param callbackfn - A function that accepts up to three arguments. The executeCooperative method calls the callbackfn function one time for each element in the array.
+ * @param resolve - A function that resolves the Promise when the loop is finished.
+ * @returns void
+ */
 export const executeCooperative = <T>(
   array: T[],
   from: number,
