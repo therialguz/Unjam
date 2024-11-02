@@ -28,12 +28,11 @@ export const executeCooperative = <T>(
     for (let i = from; i < array.length; i++) {
       callbackfn(array[i], i, array);
 
-      const now = Date.now();
+      const now = performance.now();
       if (
         now - currentCooperation![1] >= config.maxTime &&
         i < array.length - 1
       ) {
-        console.log("Execution iterated:", i - from);
         setTimeout(() => executeCooperative(array, i + 1, callbackfn, resolve));
         return;
       }
@@ -51,7 +50,7 @@ const startCooperation = (): Symbol | null => {
   }
 
   let symbol = Symbol();
-  const start = Date.now();
+  const start = performance.now();
 
   currentCooperation = [symbol, start];
 
