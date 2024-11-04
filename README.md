@@ -3,6 +3,7 @@
 _Unblock your JavaScript with non-blocking array methods!_
 
 [![npm version](https://img.shields.io/npm/v/unjam.svg)](https://www.npmjs.com/package/unjam)
+[![Static Badge](https://img.shields.io/badge/Docs-blue)](https://therialguz.github.io/Unjam/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## 🚀 Overview
@@ -31,9 +32,13 @@ yarn add unjam
 pnpm add unjam
 ```
 
+## 📚 Documentation
+
+For a full API reference and detailed examples, check out the [Documentation](https://therialguz.github.io/Unjam/).
+
 ## 🛠️ Usage
 
-Import the methods you need from Unjam and use them just like the standard array methods, but with the added benefit of not blocking the main thread. Thanks to tree-shaking support, importing directly from the module ensures that only the code you use gets included in your bundle.
+Import the methods you need from Unjam and use them just like the standard array methods, but with the added benefit of non-blocking execution. Thanks to tree-shaking support, importing directly from the module ensures that only the code you use gets included in your bundle.
 
 ```javascript
 import { forEach, map, filter } from 'unjam';
@@ -66,7 +71,7 @@ import { map } from "unjam/map"; // Only imports the 'map' function
 
 ## 📊 Performance Comparison
 
-Visualizing the benefits of cooperative multitasking with Unjam:
+Check out how Unjam’s cooperative multitasking keeps your app smooth and responsive:
 
 ### Non-Cooperative Execution
 
@@ -80,25 +85,78 @@ _In non-cooperative execution, long-running tasks block the main thread, leading
 
 _With Unjam's cooperative execution, tasks are broken into manageable chunks, allowing the main thread to remain responsive and the UI to stay smooth._
 
-These graphs illustrate how Unjam improves performance by preventing the main thread from being blocked during intensive array operations. By processing data in smaller chunks and yielding control back to the event loop, Unjam ensures that your application remains responsive.
+These graphs illustrate how Unjam prevents the main thread from being blocked during intensive array operations, ensuring your application stays responsive.
 
-## 📝 Example
+## 🔄 Advanced Usage and Patterns
+
+### Combining Methods
+
+Chain methods like `map` and `filter` with Unjam for more complex data processing.
 
 ```javascript
-import { map } from "unjam";
+import { map, filter } from "unjam";
 
 const largeArray = Array.from({ length: 100000 }, (_, i) => i);
 
 const squared = await map(largeArray, (num) => {
   return num * num;
 });
+const filtered = filter(squared, (num) => {
+  return num % 2 === 0;
+});
 
-console.log(squared);
+console.log(filtered);
 ```
+
+### Creating Custom Algorithms
+
+Unjam includes a `cooperate` function to build custom, cooperative algorithms. Let’s create a function that squares and filters an array in a cooperative-friendly way.
+
+```javascript
+import { map, filter, cooperate } from "unjam";
+
+const largeArray = Array.from({ length: 100000 }, (_, i) => i);
+
+const squareAndFilter = async (array) =>
+  await cooperate(async () => {
+    const squared = await map(array, (num) => num * num);
+    const filtered = filter(squared, (num) => num % 2 === 0);
+    return filtered;
+  });
+
+console.log(await squareAndFilter(largeArray));
+```
+
+You’re not limited to using only cooperative methods inside `cooperate`; create custom logic to control when to yield back to the main thread:
+
+```javascript
+import { cooperate } from "unjam";
+
+// Yield back control after 3 cycles
+await cooperate(async (handoff) => {
+  await handoff();
+  await handoff();
+  await handoff();
+});
+```
+
+Behind the scenes, all Unjam methods are powered by the `cooperate` function, keeping execution cooperative and non-blocking.
+
+## 💬 FAQ
+
+**Q: How does Unjam differ from using Web Workers?**  
+_A: Unjam operates on the main thread but breaks tasks into non-blocking chunks, unlike the multi-threaded approach of Web Workers._
+
+**Q: Is Unjam suitable for real-time applications?**  
+_A: Yes, Unjam is designed to keep the main thread responsive, making it ideal for real-time applications handling large datasets._
+
+## ⚠️ Limitations & Considerations
+
+Unjam is optimized for large datasets, but in cases where processing time per item is minimal, native methods might be faster. Ensure that breaking large tasks into chunks aligns with your application’s performance goals.
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request.
+Contributions are welcome! Please open an issue or submit a pull request to help improve Unjam.
 
 ## 📄 License
 
