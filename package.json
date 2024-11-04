@@ -1,12 +1,37 @@
 {
   "name": "unjam",
   "version": "0.1.0",
-  "type": "module",
+  "description": "Unjam is a JavaScript and TypeScript library offering non-blocking versions of common array methods like forEach, map, and filter. Designed for cooperative multitasking, Unjam keeps your application responsive, even with large data processing tasks, by preventing the main thread from being blocked. Perfect for smooth and efficient JavaScript execution in web applications.",
+  "keywords": [
+    "non-blocking",
+    "cooperative multitasking",
+    "JavaScript",
+    "TypeScript",
+    "forEach",
+    "map",
+    "filter",
+    "array methods",
+    "performance",
+    "async",
+    "main thread",
+    "responsive",
+    "UI",
+    "background processing",
+    "multitasking",
+    "Unjam",
+    "web performance",
+    "large datasets"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Benjamín Guzmán López",
+    "email": "benjamin.guzmanl@sansano.usm.cl"
+  },
   "files": [
     "dist"
   ],
+  "type": "module",
   "types": "./dist/unjam.d.ts",
-  "main": "dist/unjam.cjs",
   "module": "dist/unjam.mjs",
   "exports": {
     ".": {
@@ -69,6 +94,11 @@
       "require": "./dist/zip/index.cjs",
       "import": "./dist/zip/index.mjs"
     }
+  },
+  "main": "dist/unjam.cjs",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:therialguz/Unjam.git"
   },
   "scripts": {
     "dev": "vite",
