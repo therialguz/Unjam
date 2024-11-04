@@ -107,7 +107,8 @@
     "preview": "vite preview",
     "test": "vitest",
     "update-exports": "node scripts/update-exports.js",
-    "docs": "typedoc --out docs src"
+    "docs": "typedoc --out docs src",
+    "prepublish": "npm run build && npm run docs"
   },
   "devDependencies": {
     "typedoc": "^0.26.11",
