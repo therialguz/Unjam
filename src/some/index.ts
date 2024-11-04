@@ -1,4 +1,5 @@
-import { executeCooperative } from "../executeCooperative";
+import { cooperate } from "../cooperate";
+import { cooperativeFor } from "../for";
 
 /**
  * Determines whether the specified callback function returns true for any element of an array.
@@ -17,18 +18,19 @@ export const some = async <T>(
   array: T[],
   callbackfn: (value: T, index: number, array: T[]) => boolean
 ): Promise<boolean> => {
-  return new Promise((resolve) => {
+  return cooperate(async () => {
     let result = false;
-    executeCooperative(
-      array,
-      0,
-      (value, index, array) => {
-        if (callbackfn(value, index, array)) {
-          result = true;
-          resolve(result);
-        }
-      },
-      () => resolve(result)
-    );
+
+    await cooperativeFor(array.length, (i) => {
+      const value = array[i];
+      if (callbackfn(value, i, array)) {
+        result = true;
+
+        // Stop the loop
+        return true;
+      }
+    });
+
+    return result;
   });
 };

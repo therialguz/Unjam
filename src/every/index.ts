@@ -1,4 +1,5 @@
-import { executeCooperative } from "../executeCooperative";
+import { cooperate } from "../cooperate";
+import { cooperativeFor } from "../for";
 
 /**
  * Determines whether all the members of an array satisfy the specified test.
@@ -13,20 +14,21 @@ import { executeCooperative } from "../executeCooperative";
  * console.log(result); // Output: true
  * ```
  */
-export const every = async <T>(
+export const every = <T>(
   array: T[],
   callbackfn: (value: T, index: number, array: T[]) => boolean
 ): Promise<boolean> => {
-  return new Promise((resolve) => {
-    executeCooperative(
-      array,
-      0,
-      (value, index, array) => {
-        if (!callbackfn(value, index, array)) {
-          resolve(false);
-        }
-      },
-      () => resolve(true)
-    );
+  return cooperate(async () => {
+    let result = true;
+    await cooperativeFor(0, array.length, async (i) => {
+      if (callbackfn(array[i], i, array) === false) {
+        result = false;
+
+        // Break the loop
+        return true;
+      }
+    });
+
+    return result;
   });
 };

@@ -1,4 +1,4 @@
-import { executeCooperative } from "../executeCooperative";
+import { cooperativeFor } from "../for";
 
 /**
  * Calls a defined callback function on each element of an array.
@@ -21,7 +21,7 @@ export const forEach = async <T>(
   array: T[],
   callbackfn: (value: T, index: number, array: T[]) => void
 ): Promise<void> => {
-  return new Promise((resolve) => {
-    executeCooperative(array, 0, callbackfn, resolve);
+  return cooperativeFor(array.length, (index) => {
+    callbackfn(array[index], index, array);
   });
 };

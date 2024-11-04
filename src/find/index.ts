@@ -1,4 +1,5 @@
-import { executeCooperative } from "../executeCooperative";
+import { cooperate } from "../cooperate";
+import { cooperativeFor } from "../for";
 
 /**
  * Returns the first element in an array that satisfies the provided testing function.
@@ -13,22 +14,21 @@ import { executeCooperative } from "../executeCooperative";
  * console.log(result); // Output: 12
  * ```
  */
-export const find = async <T>(
+export const find = <T>(
   array: T[],
   callbackfn: (value: T, index: number, array: T[]) => boolean
 ): Promise<T | undefined> => {
-  return new Promise((resolve) => {
+  return cooperate(async () => {
     let result: T | undefined;
-    executeCooperative(
-      array,
-      0,
-      (value, index, array) => {
-        if (callbackfn(value, index, array)) {
-          result = value;
-          resolve(result);
-        }
-      },
-      () => resolve(undefined)
-    );
+    await cooperativeFor(array.length, (i) => {
+      const value = array[i];
+      if (callbackfn(value, i, array)) {
+        result = value;
+
+        // Stop the loop
+        return true;
+      }
+    });
+    return result;
   });
 };

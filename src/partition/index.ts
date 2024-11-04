@@ -1,4 +1,5 @@
-import { executeCooperative } from "../executeCooperative";
+import { cooperate } from "../cooperate";
+import { forEach } from "../forEach";
 
 /**
  *
@@ -12,23 +13,19 @@ import { executeCooperative } from "../executeCooperative";
  * const result = await partition(array, (value) => value > 2);
  * console.log(result); // Output: [[3, 4], [1, 2]]
  */
-export const partition = async <T>(
+export const partition = <T>(
   array: T[],
   callbackfn: (value: T, index: number, array: T[]) => boolean
 ): Promise<[T[], T[]]> => {
-  return new Promise((resolve) => {
+  return cooperate(async () => {
     const result: [T[], T[]] = [[], []];
-    executeCooperative(
-      array,
-      0,
-      (value, index, array) => {
-        if (callbackfn(value, index, array)) {
-          result[0].push(value);
-        } else {
-          result[1].push(value);
-        }
-      },
-      () => resolve(result)
-    );
+    await forEach(array, (value, index, array) => {
+      if (callbackfn(value, index, array)) {
+        result[0].push(value);
+      } else {
+        result[1].push(value);
+      }
+    });
+    return result;
   });
 };

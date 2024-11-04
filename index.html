@@ -23,9 +23,11 @@
         .addEventListener("click", async () => {
           console.log("Button clicked");
           document.getElementById("btn-cooperative").disabled = true;
+          const started = performance.now();
           await forEach(array, callbackFn);
+          const ended = performance.now();
           document.getElementById("btn-cooperative").disabled = false;
-          console.log("Done");
+          console.log("Done", ended - started);
         });
 
       document
@@ -33,9 +35,11 @@
         .addEventListener("click", () => {
           console.log("Button clicked");
           document.getElementById("btn-non-cooperative").disabled = true;
+          const started = performance.now();
           array.forEach(callbackFn);
+          const ended = performance.now();
           document.getElementById("btn-non-cooperative").disabled = false;
-          console.log("Done");
+          console.log("Done", ended - started);
         });
     </script>
   </body>

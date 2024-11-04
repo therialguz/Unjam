@@ -1,4 +1,4 @@
-import { executeCooperative } from "../executeCooperative";
+import { cooperativeFor } from "../for";
 
 /**
  * Creates an array of arrays, where the first element of the provided arrays are grouped together, and the second element of the provided arrays are grouped together.
@@ -17,15 +17,12 @@ export const zip = async <T, U>(
   array1: T[],
   array2: U[]
 ): Promise<[T, U][]> => {
-  return new Promise((resolve) => {
-    const result: [T, U][] = [];
-    executeCooperative(
-      array1,
-      0,
-      (value, index) => {
-        result.push([value, array2[index]]);
-      },
-      () => resolve(result)
-    );
+  const result: [T, U][] = [];
+  const minLenght = Math.min(array1.length, array2.length);
+
+  await cooperativeFor(minLenght, async (index) => {
+    result.push([array1[index], array2[index]]);
   });
+
+  return result;
 };

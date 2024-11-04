@@ -1,4 +1,5 @@
-import { executeCooperative } from "../executeCooperative";
+import { cooperate } from "../cooperate";
+import { forEach } from "../forEach";
 
 /**
  * Calls a defined callback function on each element of an array, and then flattens the result into a new array.
@@ -13,19 +14,15 @@ import { executeCooperative } from "../executeCooperative";
  * console.log(result); // Output: [1, 2, 2, 4, 3, 6, 4, 8]
  * ```
  */
-export const flatMap = async <T, U>(
+export const flatMap = <T, U>(
   array: T[],
   callbackfn: (value: T, index: number, array: T[]) => U[]
 ): Promise<U[]> => {
-  return new Promise((resolve) => {
+  return cooperate(async () => {
     const result: U[] = [];
-    executeCooperative(
-      array,
-      0,
-      (value, index, array) => {
-        result.push(...callbackfn(value, index, array));
-      },
-      () => resolve(result)
-    );
+    await forEach(array, (value, index, array) => {
+      result.push(...callbackfn(value, index, array));
+    });
+    return result;
   });
 };

@@ -13,13 +13,13 @@
       "require": "./dist/index.cjs",
       "import": "./dist/index.mjs"
     },
+    "./cooperate": {
+      "require": "./dist/cooperate/index.cjs",
+      "import": "./dist/cooperate/index.mjs"
+    },
     "./every": {
       "require": "./dist/every/index.cjs",
       "import": "./dist/every/index.mjs"
-    },
-    "./executeCooperative": {
-      "require": "./dist/executeCooperative/index.cjs",
-      "import": "./dist/executeCooperative/index.mjs"
     },
     "./filter": {
       "require": "./dist/filter/index.cjs",
@@ -32,6 +32,10 @@
     "./flatMap": {
       "require": "./dist/flatMap/index.cjs",
       "import": "./dist/flatMap/index.mjs"
+    },
+    "./for": {
+      "require": "./dist/for/index.cjs",
+      "import": "./dist/for/index.mjs"
     },
     "./forEach": {
       "require": "./dist/forEach/index.cjs",
@@ -56,6 +60,10 @@
     "./some": {
       "require": "./dist/some/index.cjs",
       "import": "./dist/some/index.mjs"
+    },
+    "./while": {
+      "require": "./dist/while/index.cjs",
+      "import": "./dist/while/index.mjs"
     },
     "./zip": {
       "require": "./dist/zip/index.cjs",

@@ -1,4 +1,5 @@
-import { executeCooperative } from "../executeCooperative";
+import { cooperate } from "../cooperate";
+import { forEach } from "../forEach";
 
 /**
  * Creates a new array with all elements that pass the test implemented by the provided function.
@@ -13,21 +14,17 @@ import { executeCooperative } from "../executeCooperative";
  * console.log(result); // Output: [1, 29, 10, 13]
  * ```
  */
-export const filter = async <T>(
+export const filter = <T>(
   array: T[],
   callbackfn: (value: T, index: number, array: T[]) => boolean
 ): Promise<T[]> => {
-  return new Promise((resolve) => {
+  return cooperate(async () => {
     const result: T[] = [];
-    executeCooperative(
-      array,
-      0,
-      (value, index, array) => {
-        if (callbackfn(value, index, array)) {
-          result.push(value);
-        }
-      },
-      () => resolve(result)
-    );
+    await forEach(array, (value, index, array) => {
+      if (callbackfn(value, index, array)) {
+        result.push(value);
+      }
+    });
+    return result;
   });
 };

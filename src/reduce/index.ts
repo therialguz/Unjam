@@ -1,4 +1,5 @@
-import { executeCooperative } from "../executeCooperative";
+import { cooperate } from "../cooperate";
+import { forEach } from "../forEach";
 
 /**
  * Applies a function against an accumulator and each element in the array (from left to right) to reduce it to a single value.
@@ -14,7 +15,7 @@ import { executeCooperative } from "../executeCooperative";
  * console.log(result); // Output: 10
  * ```
  */
-export const reduce = async <T, U>(
+export const reduce = <T, U>(
   array: T[],
   callbackfn: (
     previousValue: U,
@@ -24,15 +25,11 @@ export const reduce = async <T, U>(
   ) => U,
   initialValue: U
 ): Promise<U> => {
-  return new Promise((resolve) => {
+  return cooperate(async () => {
     let accumulator = initialValue;
-    executeCooperative(
-      array,
-      0,
-      (value, index, array) => {
-        accumulator = callbackfn(accumulator, value, index, array);
-      },
-      () => resolve(accumulator)
-    );
+    await forEach(array, (value, index, array) => {
+      accumulator = callbackfn(accumulator, value, index, array);
+    });
+    return accumulator;
   });
 };

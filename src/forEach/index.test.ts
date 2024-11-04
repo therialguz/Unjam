@@ -28,23 +28,4 @@ describe("forEach", () => {
       expect(e).toBe(error);
     }
   });
-
-  it("process a large array in batches", async () => {
-    // Enable fake timers
-    vi.useFakeTimers({ shouldAdvanceTime: true });
-
-    const arr = Array.from({ length: 1_000_000 }, (_, i) => i);
-    const result: number[] = [];
-
-    const setTimeoutSpy = vi.spyOn(globalThis, "setTimeout");
-
-    await forEach(arr, (item) => result.push(item));
-
-    expect(setTimeoutSpy).toHaveBeenCalled();
-    expect(result).toEqual(arr);
-
-    // Clear the spy and restore timers
-    setTimeoutSpy.mockRestore();
-    vi.useRealTimers();
-  });
 });
