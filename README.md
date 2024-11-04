@@ -12,6 +12,7 @@ Unjam is a JavaScript/TypeScript library that provides non-blocking, cooperative
 ## ✨ Features
 
 - **Non-blocking operations**: Keep your UI responsive even when working with large datasets.
+- **Zero dependencies**: Lightweight and efficient, with no extra overhead.
 - **Familiar API**: Uses the same method signatures as standard array methods.
 - **Tree-shaking support**: Import only what you need for optimal bundle size.
 - **TypeScript support**: Fully typed for a better development experience.
