@@ -1,3 +1,4 @@
+import { cooperate } from "../cooperate";
 import { cooperativeFor } from "../for";
 
 /**
@@ -17,12 +18,14 @@ export const zip = async <T, U>(
   array1: T[],
   array2: U[]
 ): Promise<[T, U][]> => {
-  const result: [T, U][] = [];
-  const minLenght = Math.min(array1.length, array2.length);
+  return cooperate(async () => {
+    const result: [T, U][] = [];
+    const minLenght = Math.min(array1.length, array2.length);
 
-  await cooperativeFor(minLenght, async (index) => {
-    result.push([array1[index], array2[index]]);
+    await cooperativeFor(minLenght, async (index) => {
+      result.push([array1[index], array2[index]]);
+    });
+
+    return result;
   });
-
-  return result;
 };
