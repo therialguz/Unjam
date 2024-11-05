@@ -96,16 +96,16 @@ Chain methods like `map` and `filter` with Unjam for more complex data processin
 ```javascript
 import { map, filter } from "unjam";
 
-const largeArray = Array.from({ length: 100000 }, (_, i) => i);
+const largeArray = Array.from({ length: 10_000_000 }, (_, i) => i);
 
-const squared = await map(largeArray, (num) => {
+const squared = map(largeArray, (num) => {
   return num * num;
 });
 const filtered = filter(squared, (num) => {
   return num % 2 === 0;
 });
 
-console.log(filtered);
+console.log(await filtered);
 ```
 
 ### Creating Custom Algorithms
