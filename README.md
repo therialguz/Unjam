@@ -139,7 +139,7 @@ You’re not limited to using only cooperative methods inside `cooperate`; creat
 ```javascript
 import { cooperate } from "unjam";
 
-// Yield back control after 3 cycles
+// Yield back control 3 times.
 await cooperate(async (handoff) => {
   await handoff();
   await handoff();
