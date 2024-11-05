@@ -101,11 +101,18 @@ const largeArray = Array.from({ length: 10_000_000 }, (_, i) => i);
 const squared = map(largeArray, (num) => {
   return num * num;
 });
-const filtered = filter(squared, (num) => {
+const filtered = await filter(squared, (num) => {
   return num % 2 === 0;
 });
 
-console.log(await filtered);
+// or
+
+const filtered2 = await filter(map(largeArray, (num) => {
+  return num * num
+}), (num) => num % 2 === 0)
+
+console.log(filtered);
+console.log(filtered2
 ```
 
 ### Creating Custom Algorithms
@@ -127,7 +134,7 @@ const squareAndFilter = async (array) =>
 console.log(await squareAndFilter(largeArray));
 ```
 
-You’re not limited to using only cooperative methods inside `cooperate`; create custom logic to control when to yield back to the main thread:
+You’re not limited to using only cooperative methods inside `cooperate`; create custom logic to control when to yield back to the event loop:
 
 ```javascript
 import { cooperate } from "unjam";
