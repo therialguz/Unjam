@@ -4,42 +4,138 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Performance Testing</title>
   </head>
-  <body>
-    <div id="app">
-      <button id="btn-cooperative">Cooperative</button>
-      <button id="btn-non-cooperative">Non-Cooperative</button>
+  <body class="bg-gray-900 text-white">
+    <div id="app" class="max-w-2xl mx-auto p-8 space-y-6">
+      <h1 class="text-2xl font-bold text-center">
+        Cooperative vs Non-Cooperative Testing
+      </h1>
+      <p class="text-center text-gray-400">
+        Click the buttons below to compare performance of cooperative and
+        non-cooperative functions with 10,000,000 elements.
+      </p>
+
+      <!-- forEach Test -->
+      <div class="space-y-4">
+        <h2 class="text-xl font-semibold">forEach</h2>
+        <div class="flex justify-around">
+          <button
+            id="btn-forEach-cooperative"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            forEach Cooperative
+          </button>
+          <button
+            id="btn-forEach-non-cooperative"
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          >
+            forEach Non-Cooperative
+          </button>
+        </div>
+      </div>
+
+      <!-- Map and Filter Test -->
+      <div class="space-y-4">
+        <h2 class="text-xl font-semibold">Map + Filter</h2>
+        <p class="text-sm text-gray-400 text-center">
+          Operation:
+          <code>filter(map(array, x => x * x), x => x >= 50,000)</code>
+        </p>
+        <div class="flex justify-around">
+          <button
+            id="btn-map-filter-cooperative"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Map + Filter Cooperative
+          </button>
+          <button
+            id="btn-map-filter-non-cooperative"
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Map + Filter Non-Cooperative
+          </button>
+        </div>
+      </div>
+
+      <!-- Result Section -->
+      <div id="result" class="bg-gray-800 p-4 rounded shadow-md">
+        <h3 class="text-lg font-semibold">Results</h3>
+        <pre
+          id="output"
+          class="text-green-400 overflow-x-auto whitespace-pre-wrap"
+        ></pre>
+      </div>
     </div>
-    <script type="module" src="/src/index.ts"></script>
+
     <script type="module">
-      import { forEach, config } from "unjam";
+      import { forEach, map, filter } from "unjam";
 
-      const array = Array.from({ length: 100_000_000 }, (_, i) => i);
-      const callbackFn = () => {};
+      const array = Array.from({ length: 10_000_000 }, (_, i) => i);
 
+      const logResult = (label, time) => {
+        const output = document.getElementById("output");
+        output.textContent += `${label}: ${time.toFixed(2)} ms\n`;
+      };
+
+      // forEach Tests
       document
-        .getElementById("btn-cooperative")
+        .getElementById("btn-forEach-cooperative")
         .addEventListener("click", async () => {
-          console.log("Button clicked");
-          document.getElementById("btn-cooperative").disabled = true;
-          const started = performance.now();
-          await forEach(array, callbackFn);
-          const ended = performance.now();
-          document.getElementById("btn-cooperative").disabled = false;
-          console.log("Done", ended - started);
+          document.getElementById("btn-forEach-cooperative").disabled = true;
+          const start = performance.now();
+          await forEach(array, (x) => x + 1); // Example operation
+          const end = performance.now();
+          document.getElementById("btn-forEach-cooperative").disabled = false;
+          logResult("Cooperative forEach", end - start);
         });
 
       document
-        .getElementById("btn-non-cooperative")
+        .getElementById("btn-forEach-non-cooperative")
         .addEventListener("click", () => {
-          console.log("Button clicked");
-          document.getElementById("btn-non-cooperative").disabled = true;
-          const started = performance.now();
-          array.forEach(callbackFn);
-          const ended = performance.now();
-          document.getElementById("btn-non-cooperative").disabled = false;
-          console.log("Done", ended - started);
+          document.getElementById(
+            "btn-forEach-non-cooperative"
+          ).disabled = true;
+          const start = performance.now();
+          array.forEach((x) => x + 1); // Example operation
+          const end = performance.now();
+          document.getElementById(
+            "btn-forEach-non-cooperative"
+          ).disabled = false;
+          logResult("Non-Cooperative forEach", end - start);
+        });
+
+      // Map + Filter Tests
+      document
+        .getElementById("btn-map-filter-cooperative")
+        .addEventListener("click", async () => {
+          document.getElementById("btn-map-filter-cooperative").disabled = true;
+          const start = performance.now();
+          const result = await filter(
+            map(array, (x) => x * x),
+            (x) => x >= 50_000
+          );
+          const end = performance.now();
+          document.getElementById(
+            "btn-map-filter-cooperative"
+          ).disabled = false;
+          logResult("Cooperative Map + Filter", end - start);
+        });
+
+      document
+        .getElementById("btn-map-filter-non-cooperative")
+        .addEventListener("click", () => {
+          document.getElementById(
+            "btn-map-filter-non-cooperative"
+          ).disabled = true;
+          const start = performance.now();
+          const result = array.map((x) => x * x).filter((x) => x >= 50_000);
+          const end = performance.now();
+          document.getElementById(
+            "btn-map-filter-non-cooperative"
+          ).disabled = false;
+          logResult("Non-Cooperative Map + Filter", end - start);
         });
     </script>
   </body>

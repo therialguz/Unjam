@@ -15,9 +15,12 @@ import { cooperativeFor } from "../for";
  * ```
  */
 export const some = async <T>(
-  array: T[],
+  arrayOrPromise: T[] | Promise<T[]>,
   callbackfn: (value: T, index: number, array: T[]) => boolean
 ): Promise<boolean> => {
+  const array =
+    arrayOrPromise instanceof Promise ? await arrayOrPromise : arrayOrPromise;
+
   return cooperate(async () => {
     let result = false;
 

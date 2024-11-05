@@ -2,7 +2,7 @@ import { cooperate, CooperatePromise } from ".";
 
 describe("cooperate", () => {
   it("should call the callback and resolve the promise", async () => {
-    const callback = vi.fn(() => {});
+    const callback = vi.fn(async () => {});
     const promise = cooperate(callback) as CooperatePromise<void>;
     await promise;
 

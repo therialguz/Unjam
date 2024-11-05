@@ -15,8 +15,8 @@ import { forEach } from "../forEach";
  * console.log(result); // Output: 10
  * ```
  */
-export const reduce = <T, U>(
-  array: T[],
+export const reduce = async <T, U>(
+  arrayOrPromise: T[] | Promise<T[]>,
   callbackfn: (
     previousValue: U,
     currentValue: T,
@@ -25,6 +25,9 @@ export const reduce = <T, U>(
   ) => U,
   initialValue: U
 ): Promise<U> => {
+  const array =
+    arrayOrPromise instanceof Promise ? await arrayOrPromise : arrayOrPromise;
+
   return cooperate(async () => {
     let accumulator = initialValue;
     await forEach(array, (value, index, array) => {

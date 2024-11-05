@@ -13,10 +13,13 @@ import { forEach } from "../forEach";
  * const result = await partition(array, (value) => value > 2);
  * console.log(result); // Output: [[3, 4], [1, 2]]
  */
-export const partition = <T>(
-  array: T[],
+export const partition = async <T>(
+  arrayOrPromise: T[] | Promise<T[]>,
   callbackfn: (value: T, index: number, array: T[]) => boolean
 ): Promise<[T[], T[]]> => {
+  const array =
+    arrayOrPromise instanceof Promise ? await arrayOrPromise : arrayOrPromise;
+
   return cooperate(async () => {
     const result: [T[], T[]] = [[], []];
     await forEach(array, (value, index, array) => {

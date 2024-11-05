@@ -1,4 +1,4 @@
-import { resolve, basename, extname, dirname, isAbsolute } from "path";
+import { resolve, basename, extname, dirname } from "path";
 import { defineConfig } from "vite";
 import { readdirSync, statSync } from "fs";
 import dts from "vite-plugin-dts";
@@ -37,14 +37,6 @@ const getFileName = (chunk, extension) => {
   // Compare the file's directory with the parent folder path
   const isInSrcDir = fileDirectory === absoluteParentFolderPath;
 
-  console.log(
-    targetPath,
-    absoluteFilePath,
-    absoluteParentFolderPath,
-    fileDirectory,
-    isInSrcDir
-  );
-
   return isInSrcDir
     ? `${chunk.name}.${extension}`
     : `${chunk.name}/index.${extension}`;
@@ -80,5 +72,5 @@ export default defineConfig({
   test: {
     globals: true,
   },
-  plugins: [dts({ exclude: "**/*.test.ts" })],
+  plugins: [dts({ exclude: "**/*.(test|bench).ts" })],
 });

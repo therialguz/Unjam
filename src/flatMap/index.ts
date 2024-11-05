@@ -14,10 +14,13 @@ import { forEach } from "../forEach";
  * console.log(result); // Output: [1, 2, 2, 4, 3, 6, 4, 8]
  * ```
  */
-export const flatMap = <T, U>(
-  array: T[],
+export const flatMap = async <T, U>(
+  arrayOrPromise: T[] | Promise<T[]>,
   callbackfn: (value: T, index: number, array: T[]) => U[]
 ): Promise<U[]> => {
+  const array =
+    arrayOrPromise instanceof Promise ? await arrayOrPromise : arrayOrPromise;
+
   return cooperate(async () => {
     const result: U[] = [];
     await forEach(array, (value, index, array) => {

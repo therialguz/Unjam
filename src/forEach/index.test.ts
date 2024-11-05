@@ -15,7 +15,7 @@ describe("forEach", () => {
     expect(result).toEqual(arr);
   });
 
-  it.skip("catches errors in the callback", async () => {
+  it("catches errors in the callback", async () => {
     const arr = [1, 2, 3];
     const result: number[] = [];
     const error = new Error("test error");

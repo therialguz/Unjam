@@ -18,9 +18,12 @@ import { cooperativeFor } from "../for";
  * ```
  */
 export const forEach = async <T>(
-  array: T[],
+  arrayOrPromise: T[] | Promise<T[]>,
   callbackfn: (value: T, index: number, array: T[]) => void
 ): Promise<void> => {
+  const array =
+    arrayOrPromise instanceof Promise ? await arrayOrPromise : arrayOrPromise;
+
   return cooperativeFor(array.length, (index) => {
     callbackfn(array[index], index, array);
   });

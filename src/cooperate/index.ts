@@ -18,7 +18,7 @@ export interface CooperatePromise<T> extends Promise<T> {
 let currentId = 0;
 
 export const cooperate = <T = void>(
-  callback: (handoff: () => Promise<void>) => T | Promise<T>
+  callback: (handoff: () => Promise<void>) => Promise<T>
 ): Promise<T> => {
   const status: CooperateStatus = {
     numberOfCooperations: 0,
@@ -43,13 +43,12 @@ export const cooperate = <T = void>(
       });
     };
 
-    let result: T;
     try {
       if (currentCooperation === null) {
         currentCooperation = [cooperationId, Date.now()];
       }
       status.numberOfCooperations++;
-      result = await callback(handoff as () => Promise<void>);
+      const result = await callback(handoff);
       resolve(result);
     } catch (error) {
       reject(error);

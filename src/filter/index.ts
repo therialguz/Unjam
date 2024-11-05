@@ -14,10 +14,13 @@ import { forEach } from "../forEach";
  * console.log(result); // Output: [1, 29, 10, 13]
  * ```
  */
-export const filter = <T>(
-  array: T[],
+export const filter = async <T>(
+  arrayOrPromise: T[] | Promise<T[]>,
   callbackfn: (value: T, index: number, array: T[]) => boolean
 ): Promise<T[]> => {
+  const array =
+    arrayOrPromise instanceof Promise ? await arrayOrPromise : arrayOrPromise;
+
   return cooperate(async () => {
     const result: T[] = [];
     await forEach(array, (value, index, array) => {

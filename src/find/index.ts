@@ -14,10 +14,13 @@ import { cooperativeFor } from "../for";
  * console.log(result); // Output: 12
  * ```
  */
-export const find = <T>(
-  array: T[],
+export const find = async <T>(
+  arrayOrPromise: T[] | Promise<T[]>,
   callbackfn: (value: T, index: number, array: T[]) => boolean
 ): Promise<T | undefined> => {
+  const array =
+    arrayOrPromise instanceof Promise ? await arrayOrPromise : arrayOrPromise;
+
   return cooperate(async () => {
     let result: T | undefined;
     await cooperativeFor(array.length, (i) => {

@@ -14,10 +14,13 @@ import { cooperativeFor } from "../for";
  * console.log(result); // Output: true
  * ```
  */
-export const every = <T>(
-  array: T[],
+export const every = async <T>(
+  arrayOrPromise: T[] | Promise<T[]>,
   callbackfn: (value: T, index: number, array: T[]) => boolean
 ): Promise<boolean> => {
+  const array =
+    arrayOrPromise instanceof Promise ? await arrayOrPromise : arrayOrPromise;
+
   return cooperate(async () => {
     let result = true;
     await cooperativeFor(0, array.length, async (i) => {
