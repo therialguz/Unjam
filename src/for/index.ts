@@ -50,7 +50,7 @@ export const cooperativeFor: CooperativeForType = (
 
   const maxTime = config.maxTime;
   return cooperate<void>(async (handoff) => {
-    let startedAt = getCurrentCooperation()[1];
+    let startedAt = getCurrentCooperation().startedAt;
 
     while (current < end) {
       const shouldBreak = action(current);
@@ -62,7 +62,7 @@ export const cooperativeFor: CooperativeForType = (
 
       if (current < end && Date.now() - startedAt >= maxTime) {
         await handoff();
-        startedAt = getCurrentCooperation()[1];
+        startedAt = getCurrentCooperation().startedAt;
       }
     }
   });

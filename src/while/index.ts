@@ -10,7 +10,7 @@ export const cooperativeWhile = (
   action: () => void | Promise<void> | unknown
 ) => {
   return cooperate(async (handoff) => {
-    let startedAt = getCurrentCooperation()[1];
+    let startedAt = getCurrentCooperation().startedAt;
 
     while (condition()) {
       const result = action();
@@ -21,7 +21,7 @@ export const cooperativeWhile = (
       const now = Date.now();
       if (now - startedAt >= config.maxTime && condition()) {
         await handoff();
-        startedAt = getCurrentCooperation()[1];
+        startedAt = getCurrentCooperation().startedAt;
       }
     }
   });

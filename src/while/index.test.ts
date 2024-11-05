@@ -1,6 +1,6 @@
 import { cooperativeWhile } from ".";
 import { config } from "../config";
-import { CooperatePromise } from "../cooperate";
+import { CooperationPromise } from "../cooperate";
 
 describe("cooperativeWhile", () => {
   it("should iterate while condition is true", async () => {
@@ -10,7 +10,7 @@ describe("cooperativeWhile", () => {
     const promise = cooperativeWhile(
       condition,
       action
-    ) as CooperatePromise<void>;
+    ) as CooperationPromise<void>;
     await promise;
 
     expect(count).toBe(10);
@@ -26,7 +26,7 @@ describe("cooperativeWhile", () => {
     const promise = cooperativeWhile(
       condition,
       action
-    ) as CooperatePromise<void>;
+    ) as CooperationPromise<void>;
     await promise;
 
     expect(count).toBe(0);
@@ -43,7 +43,7 @@ describe("cooperativeWhile", () => {
     const promise = cooperativeWhile(
       condition,
       action
-    ) as CooperatePromise<void>;
+    ) as CooperationPromise<void>;
 
     await expect(promise).rejects.toThrow("Test error");
     expect(condition).toHaveBeenCalledTimes(1);
@@ -71,7 +71,7 @@ describe("cooperativeWhile", () => {
     const promise = cooperativeWhile(
       () => i < 5,
       action
-    ) as CooperatePromise<void>;
+    ) as CooperationPromise<void>;
     await promise;
     expect(action).toHaveBeenCalledTimes(5);
     expect(promise._status.numberOfCooperations).toEqual(5);

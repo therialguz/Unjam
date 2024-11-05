@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import { cooperativeFor } from "./index";
-import { CooperatePromise } from "../cooperate";
+import { CooperationPromise } from "../cooperate";
 import { config } from "../config";
 
 describe("cooperativeFor", () => {
@@ -47,7 +47,7 @@ describe("cooperativeFor", () => {
       }
     };
     const action = vi.fn(() => wait(5));
-    const promise = cooperativeFor(0, 5, action) as CooperatePromise<void>;
+    const promise = cooperativeFor(0, 5, action) as CooperationPromise<void>;
     await promise;
     expect(action).toHaveBeenCalledTimes(5);
     expect(promise._status.numberOfCooperations).toEqual(5);
