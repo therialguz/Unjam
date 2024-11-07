@@ -135,15 +135,4 @@ export interface CooperationPromise<T> extends Promise<T> {
      */
     numberOfCooperations: number;
   };
-
-  /**
-   * A function to cancel the cooperation. This will reject the promise with a `CancelError`.
-   * The `reason` parameter can be used to provide a reason for cancelling the cooperation.
-   *
-   * **Important Note**: Once the cooperation is cancelled, it will stop executing the next time it is handed off.
-   *
-   * @param reason - The reason for cancelling the cooperation.
-   * @returns void
-   */
-  cancel: (reason?: string) => void;
 }
