@@ -1,0 +1,4 @@
+// @ts-check
+/** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
+const typedocSidebar = { items: [{"type":"doc","id":"api/cooperate","label":"cooperate"},{"type":"doc","id":"api/every","label":"every"},{"type":"doc","id":"api/filter","label":"filter"},{"type":"doc","id":"api/find","label":"find"},{"type":"doc","id":"api/flatMap","label":"flatMap"},{"type":"doc","id":"api/forEach","label":"forEach"},{"type":"doc","id":"api/groupBy","label":"groupBy"},{"type":"doc","id":"api/map","label":"map"},{"type":"doc","id":"api/partition","label":"partition"},{"type":"doc","id":"api/reduce","label":"reduce"},{"type":"doc","id":"api/some","label":"some"},{"type":"doc","id":"api/zip","label":"zip"}]};
+module.exports = typedocSidebar.items;

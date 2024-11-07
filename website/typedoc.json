@@ -1,0 +1,19 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPointStrategy": "expand",
+  "entryPoints": ["../src/**/index.ts"],
+  "out": "doc",
+  "parametersFormat": "table",
+  "interfacePropertiesFormat": "list",
+  "readme": "none",
+  "excludeInternal": true,
+  "excludeNotDocumented": true,
+  "excludeReferences": true,
+  "navigation": {
+    "includeCategories": true,
+    "includeGroups": false,
+    "includeFolders": true
+  },
+  "categorizeByGroup": true,
+  "name": "API"
+}
