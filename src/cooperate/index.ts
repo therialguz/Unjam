@@ -47,7 +47,7 @@ export const cooperate = <T = void>(
 
       return new Promise<void>((resolve) => {
         // Schedule a task that will resume the cooperation in the next "macrotask"
-        setTimeout(() => {
+        requestAnimationFrame(() => {
           queueMicrotask(() => {
             cooperationStatus = {
               initiator: savedCooperationStatus.initiator,
@@ -57,7 +57,7 @@ export const cooperate = <T = void>(
             // Update the internal status of the cooperation
             status.numberOfCooperations++;
           });
-        }, 0);
+        });
       });
     };
 
