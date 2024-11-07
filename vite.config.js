@@ -71,6 +71,7 @@ export default defineConfig({
   },
   test: {
     globals: true,
+    setupFiles: "vitest.setup.ts",
   },
   plugins: [dts({ exclude: "**/*.(test|bench).ts" })],
 });
