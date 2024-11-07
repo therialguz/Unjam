@@ -38,6 +38,10 @@
       "require": "./dist/index.cjs",
       "import": "./dist/index.mjs"
     },
+    "./chunk": {
+      "require": "./dist/chunk/index.cjs",
+      "import": "./dist/chunk/index.mjs"
+    },
     "./cooperate": {
       "require": "./dist/cooperate/index.cjs",
       "import": "./dist/cooperate/index.mjs"
@@ -85,6 +89,10 @@
     "./some": {
       "require": "./dist/some/index.cjs",
       "import": "./dist/some/index.mjs"
+    },
+    "./unzip": {
+      "require": "./dist/unzip/index.cjs",
+      "import": "./dist/unzip/index.mjs"
     },
     "./while": {
       "require": "./dist/while/index.cjs",
