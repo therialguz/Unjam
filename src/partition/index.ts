@@ -3,7 +3,7 @@ import { forEach } from "../forEach";
 
 /**
  *
- * @param array - The array to iterate over.
+ * @param arrayOrPromise - The array or Promise of an array to iterate over.
  * @param callbackfn - A function that accepts up to three arguments. The partition method calls the callbackfn function one time for each element in the array.
  * @returns A Promise that resolves with an array containing two arrays: the first array contains the elements that satisfy the condition, and the second array contains the elements that do not satisfy the condition.
  *

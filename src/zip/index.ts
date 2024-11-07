@@ -3,8 +3,8 @@ import { cooperativeFor } from "../for";
 
 /**
  * Creates an array of arrays, where the first element of the provided arrays are grouped together, and the second element of the provided arrays are grouped together.
- * @param array1 - The first array to iterate over.
- * @param array2 - The second array to iterate over.
+ * @param arrayOrPromise1 - The first array or Promise of an array to iterate over.
+ * @param arrayOrPromise2 - The first array or Promise of an array to iterate over.
  * @returns A Promise that resolves with a new array of arrays.
  *
  * @example

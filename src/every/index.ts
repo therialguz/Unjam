@@ -3,7 +3,7 @@ import { cooperativeFor } from "../for";
 
 /**
  * Determines whether all the members of an array satisfy the specified test.
- * @param array - The array to iterate over.
+ * @param arrayOrPromise - The array or Promise of an array to iterate over.
  * @param callbackfn - A function that accepts up to three arguments. The every method calls the callbackfn function for each element in the array until the callbackfn returns false, or until the end of the array.
  * @returns A Promise that resolves with a boolean value indicating whether all the members of the array satisfy the specified test.
  *

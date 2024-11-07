@@ -3,7 +3,7 @@ import { forEach } from "../forEach";
 
 /**
  * Applies a function against an accumulator and each element in the array (from left to right) to reduce it to a single value.
- * @param array - The array to iterate over.
+ * @param arrayOrPromise - The array or Promise of an array to iterate over.
  * @param callbackfn - A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.
  * @param initialValue - The initial value of the accumulator.
  * @returns A Promise that resolves with the value that results from the reduction.

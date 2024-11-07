@@ -3,7 +3,7 @@ import { cooperativeFor } from "../for";
 
 /**
  * Determines whether the specified callback function returns true for any element of an array.
- * @param array - The array to iterate over.
+ * @param arrayOrPromise - The array or Promise of an array to iterate over.
  * @param callbackfn - A function that accepts up to three arguments. The some method calls the callbackfn function one time for each element in the array until the callbackfn returns true, or until the end of the array.
  * @returns A Promise that resolves with a boolean value indicating whether at least one element in the array satisfies the specified test.
  *

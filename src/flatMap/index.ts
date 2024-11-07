@@ -3,7 +3,7 @@ import { forEach } from "../forEach";
 
 /**
  * Calls a defined callback function on each element of an array, and then flattens the result into a new array.
- * @param array - The array to iterate over.
+ * @param arrayOrPromise - The array or Promise of an array to iterate over.
  * @param callbackfn - A function that accepts up to three arguments. The flatMap method calls the callbackfn function one time for each element in the array.
  * @returns A Promise that resolves with a new array with the results of calling a provided function on every element in the calling array and flattening the result into a new array.
  *

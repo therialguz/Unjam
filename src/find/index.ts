@@ -3,7 +3,7 @@ import { cooperativeFor } from "../for";
 
 /**
  * Returns the first element in an array that satisfies the provided testing function.
- * @param array - The array to iterate over.
+ * @param arrayOrPromise - The array or Promise of an array to iterate over.
  * @param callbackfn - A function that accepts up to three arguments. The find method calls the callbackfn function one time for each element in the array.
  * @returns A Promise that resolves with the first element in the array that satisfies the provided testing function. Otherwise, undefined is returned.
  *
