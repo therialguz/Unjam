@@ -13,6 +13,7 @@ import { cooperativeFor } from "../for";
  * const array2 = ["a", "b", "c"];
  * const result = await zip(array1, array2);
  * console.log(result); // Output: [[1, "a"], [2, "b"], [3, "c"]]
+ * ```
  */
 export const zip = async <T, U>(
   arrayOrPromise1: T[] | Promise<T[]>,
