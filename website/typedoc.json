@@ -15,5 +15,6 @@
     "includeFolders": true
   },
   "categorizeByGroup": true,
-  "name": "API"
+  "name": "API",
+  "skipErrorChecking": true
 }

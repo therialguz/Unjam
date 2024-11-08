@@ -34,4 +34,4 @@ console.log(result); // Output: [[3, 4], [1, 2]]
 
 #### Defined in
 
-[src/partition/index.ts:16](https://github.com/therialguz/Unjam/blob/9e9381fe8605ec86756f855f0366216b2297b145/src/partition/index.ts#L16)
+[src/partition/index.ts:16](https://github.com/therialguz/Unjam/blob/d4a4b9bac1809c1eac22f36c6da11daa773b8abc/src/partition/index.ts#L16)

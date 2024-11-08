@@ -39,4 +39,4 @@ console.log(result); // Output: 10
 
 #### Defined in
 
-[src/reduce/index.ts:18](https://github.com/therialguz/Unjam/blob/9e9381fe8605ec86756f855f0366216b2297b145/src/reduce/index.ts#L18)
+[src/reduce/index.ts:18](https://github.com/therialguz/Unjam/blob/d4a4b9bac1809c1eac22f36c6da11daa773b8abc/src/reduce/index.ts#L18)

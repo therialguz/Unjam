@@ -37,4 +37,4 @@ console.log(result); // Output: [1, 29, 10, 13]
 
 #### Defined in
 
-[src/filter/index.ts:17](https://github.com/therialguz/Unjam/blob/9e9381fe8605ec86756f855f0366216b2297b145/src/filter/index.ts#L17)
+[src/filter/index.ts:17](https://github.com/therialguz/Unjam/blob/d4a4b9bac1809c1eac22f36c6da11daa773b8abc/src/filter/index.ts#L17)

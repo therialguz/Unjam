@@ -2,6 +2,7 @@
 
 ## Modules
 
+- [chunk](chunk.md)
 - [cooperate](cooperate.md)
 - [every](every.md)
 - [filter](filter.md)
@@ -13,4 +14,5 @@
 - [partition](partition.md)
 - [reduce](reduce.md)
 - [some](some.md)
+- [unzip](unzip.md)
 - [zip](zip.md)
