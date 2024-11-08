@@ -57,6 +57,7 @@ export default defineConfig({
           dir: "dist",
           preserveModules: true,
           preserveModulesRoot: "src",
+          sourcemap: "inline",
         },
         {
           // CJS format
@@ -65,6 +66,7 @@ export default defineConfig({
           dir: "dist",
           preserveModules: true,
           preserveModulesRoot: "src",
+          sourcemap: "inline",
         },
       ],
     },
