@@ -70,13 +70,15 @@
     </div>
 
     <script type="module">
-      import { forEach, map, filter } from "unjam";
+      import { forEach, map, filter, reduce } from "unjam";
 
-      const array = Array.from({ length: 10_000_000 }, (_, i) => i);
+      const array = Array.from({ length: 5_000_000 }, (_, i) => i);
 
-      const logResult = (label, time) => {
+      const logResult = (label, time, value) => {
         const output = document.getElementById("output");
-        output.textContent += `${label}: ${time.toFixed(2)} ms\n`;
+        // Add the result to the top of the list
+        const result = `${label}: ${time.toFixed(2)}ms (${value})\n`;
+        output.textContent = result + output.textContent;
       };
 
       // forEach Tests
@@ -85,10 +87,11 @@
         .addEventListener("click", async () => {
           document.getElementById("btn-forEach-cooperative").disabled = true;
           const start = performance.now();
-          await forEach(array, (x) => x + 1); // Example operation
+          let result = 0;
+          await forEach(array, (x) => (result += x)); // Example operation
           const end = performance.now();
           document.getElementById("btn-forEach-cooperative").disabled = false;
-          logResult("Cooperative forEach", end - start);
+          logResult("Cooperative forEach", end - start, result);
         });
 
       document
@@ -98,12 +101,13 @@
             "btn-forEach-non-cooperative"
           ).disabled = true;
           const start = performance.now();
-          array.forEach((x) => x + 1); // Example operation
+          let result = 0;
+          array.forEach((x) => (result += x)); // Example operation
           const end = performance.now();
           document.getElementById(
             "btn-forEach-non-cooperative"
           ).disabled = false;
-          logResult("Non-Cooperative forEach", end - start);
+          logResult("Non-Cooperative forEach", end - start, result);
         });
 
       // Map + Filter Tests
@@ -112,15 +116,19 @@
         .addEventListener("click", async () => {
           document.getElementById("btn-map-filter-cooperative").disabled = true;
           const start = performance.now();
-          const result = await filter(
-            map(array, (x) => x * x),
-            (x) => x >= 50_000
+          const result = await reduce(
+            filter(
+              map(array, (x) => x * x),
+              (x) => x >= 50_000
+            ),
+            (acc, x) => acc + x,
+            0
           );
           const end = performance.now();
           document.getElementById(
             "btn-map-filter-cooperative"
           ).disabled = false;
-          logResult("Cooperative Map + Filter", end - start);
+          logResult("Cooperative Map + Filter", end - start, result);
         });
 
       document
@@ -130,12 +138,15 @@
             "btn-map-filter-non-cooperative"
           ).disabled = true;
           const start = performance.now();
-          const result = array.map((x) => x * x).filter((x) => x >= 50_000);
+          const result = array
+            .map((x) => x * x)
+            .filter((x) => x >= 50_000)
+            .reduce((acc, x) => acc + x, 0);
           const end = performance.now();
           document.getElementById(
             "btn-map-filter-non-cooperative"
           ).disabled = false;
-          logResult("Non-Cooperative Map + Filter", end - start);
+          logResult("Non-Cooperative Map + Filter", end - start, result);
         });
     </script>
   </body>
