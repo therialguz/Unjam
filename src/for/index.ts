@@ -50,20 +50,51 @@ export const cooperativeFor: CooperativeForType = (
 
   const maxTime = config.maxTime;
   return cooperate<void>(async (handoff) => {
-    let startedAt = getCurrentCooperation().startedAt;
+    const currentCooperation = getCurrentCooperation();
+    let endTime = currentCooperation.startedAt + maxTime;
+
+    let maxBatchSize = 1;
+    let batchSize = 1; // Start with 1 iteration per batch
 
     while (current < end) {
-      const shouldBreak = action(current);
-      current += step;
+      const batchStart = performance.now();
+      // Run a batch of iterations without calling Date.now()
+      for (let i = 0; i < batchSize && current < end; i++) {
+        const shouldBreak = action(current);
+        current += step;
 
-      if (shouldBreak === true) {
-        break;
+        if (shouldBreak === true || current >= end) {
+          return; // Exit early if the action indicates to stop
+        }
       }
 
-      if (current < end && Date.now() - startedAt >= maxTime) {
+      // Check the time only after completing the batch
+      const batchEnd = performance.now();
+      const batchDuration = batchEnd - batchStart;
+      const averageBatchTime = Math.max(batchDuration / batchSize, 0.00001);
+      // Dynamically set batch size to run more iterations if each batch is short
+      maxBatchSize = Math.max(1, Math.floor(maxTime / averageBatchTime));
+
+      // Calculate the time left in the current cooperation
+      let timeLeft = endTime - Date.now();
+
+      // Check if maxTime has been exceeded
+      if (timeLeft <= 0) {
+        // Yield control after each batch
         await handoff();
-        startedAt = getCurrentCooperation().startedAt;
+
+        // Update the end time to the time the currentCooperation started plus the max time
+        endTime = currentCooperation.startedAt + maxTime;
+
+        // We need to recalculate the time left because we could be inside a nested cooperation so we could have less time left
+        timeLeft = Math.max(endTime - Date.now(), 0);
       }
+
+      // Calculate the number of iterations that can be run in the remaining time
+      batchSize = Math.min(
+        maxBatchSize,
+        Math.max(Math.floor(timeLeft / averageBatchTime), 1)
+      );
     }
   });
 };

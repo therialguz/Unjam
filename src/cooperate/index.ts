@@ -49,10 +49,9 @@ export const cooperate = <T = void>(
         // Schedule a task that will resume the cooperation in the next "macrotask"
         requestAnimationFrame(() => {
           queueMicrotask(() => {
-            cooperationStatus = {
-              initiator: savedCooperationStatus.initiator,
-              startedAt: Date.now(),
-            };
+            savedCooperationStatus.startedAt = Date.now();
+            cooperationStatus = savedCooperationStatus;
+
             resolve();
             // Update the internal status of the cooperation
             status.numberOfCooperations++;
@@ -69,18 +68,18 @@ export const cooperate = <T = void>(
       });
     }
 
+    // Start a new cooperation if one is not already in progress
+    if (cooperationStatus === null) {
+      cooperationStatus = {
+        initiator: cooperationId,
+        startedAt: Date.now(),
+      };
+    }
+
+    // Update the internal status of the cooperation
+    status.numberOfCooperations++;
+
     try {
-      // Start a new cooperation if one is not already in progress
-      if (cooperationStatus === null) {
-        cooperationStatus = {
-          initiator: cooperationId,
-          startedAt: Date.now(),
-        };
-      }
-
-      // Update the internal status of the cooperation
-      status.numberOfCooperations++;
-
       // Execute the cooperative callback
       resolve(await callback(handoff));
     } catch (error) {
