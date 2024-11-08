@@ -34,7 +34,7 @@ describe("cooperativeFor", () => {
     }
   });
 
-  it.only("should handle cooperative handoff when maxTime is exceeded", async () => {
+  it("should handle cooperative handoff when maxTime is exceeded", async () => {
     // Set the maxTime to a low value to force a handoff
     const originalTime = config.maxTime;
     config.maxTime = 1;
