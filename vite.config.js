@@ -44,6 +44,7 @@ const getFileName = (chunk, extension) => {
 
 export default defineConfig({
   build: {
+    sourcemap: true,
     lib: {
       entry: entries,
     },
@@ -57,7 +58,6 @@ export default defineConfig({
           dir: "dist",
           preserveModules: true,
           preserveModulesRoot: "src",
-          sourcemap: "inline",
         },
         {
           // CJS format
@@ -66,7 +66,6 @@ export default defineConfig({
           dir: "dist",
           preserveModules: true,
           preserveModulesRoot: "src",
-          sourcemap: "inline",
         },
       ],
     },

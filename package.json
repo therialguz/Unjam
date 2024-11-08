@@ -42,6 +42,10 @@
       "require": "./dist/chunk/index.cjs",
       "import": "./dist/chunk/index.mjs"
     },
+    "./compactMap": {
+      "require": "./dist/compactMap/index.cjs",
+      "import": "./dist/compactMap/index.mjs"
+    },
     "./cooperate": {
       "require": "./dist/cooperate/index.cjs",
       "import": "./dist/cooperate/index.mjs"
