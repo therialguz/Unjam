@@ -159,7 +159,7 @@ _A: Yes, Unjam is designed to keep the main thread responsive, making it ideal f
 
 ## ⚠️ Limitations & Considerations
 
-Unjam is optimized for large datasets, but in cases where processing time per item is minimal, native methods might be faster. Ensure that breaking large tasks into chunks aligns with your application’s performance goals.
+Unjam is optimized for large datasets with similar processing times per item. However, native methods may offer better performance in some cases. Ensure that chunking large tasks aligns with your application’s performance objectives.
 
 ## 🤝 Contributing
 
