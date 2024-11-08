@@ -2,16 +2,17 @@ import { bench } from "vitest";
 import { forEach } from ".";
 
 describe("forEach", () => {
-  const array = Array.from({ length: 100 }, (_, i) => i);
+  describe.each([1_000, 10_000, 100_000, 1_000_000])(`%i iterations`, (i) => {
+    const array = Array.from({ length: i }, (_, i) => i);
 
-  bench("array as array", async () => {
-    const result: number[] = [];
-    await forEach(array, (item) => result.push(item));
-  });
+    bench("forEach(array)", async () => {
+      const result: number[] = [];
+      await forEach(array, (item) => result.push(item));
+    });
 
-  bench("array as promise", async () => {
-    const promise = Promise.resolve(array);
-    const result: number[] = [];
-    await forEach(promise, (item) => result.push(item));
+    bench("array.forEach", () => {
+      const result: number[] = [];
+      array.forEach((item) => result.push(item));
+    });
   });
 });
