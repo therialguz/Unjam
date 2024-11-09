@@ -1,28 +1,31 @@
 import { config } from "../config";
 import { cooperate, getCurrentCooperation } from "../cooperate";
 
+type CooperativeAction = (
+  i: number
+) => Promise<boolean | void | unknown> | boolean | void | unknown;
 type CooperativeForType = {
-  (end: number, action: (i: number) => void): Promise<void>;
-  (start: number, end: number, action: (i: number) => void): Promise<void>;
+  (end: number, action: CooperativeAction): Promise<void>;
+  (start: number, end: number, action: CooperativeAction): Promise<void>;
   (
     start: number,
     end: number,
     step: number,
-    action: (i: number) => void
+    action: CooperativeAction
   ): Promise<void>;
 };
 
 export const cooperativeFor: CooperativeForType = (
   startOrEnd: number,
-  endOrAction: number | ((i: number) => boolean | unknown),
-  stepOrAction?: number | ((i: number) => boolean | unknown),
-  actionCallback?: (i: number) => boolean | unknown
+  endOrAction: number | CooperativeAction,
+  stepOrAction?: number | CooperativeAction,
+  actionCallback?: CooperativeAction
 ) => {
   // Determine which overload was used and assign parameters accordingly
   let start = 0;
   let end: number;
   let step = 1;
-  let action: (i: number) => boolean | unknown;
+  let action: CooperativeAction;
 
   if (typeof endOrAction === "function") {
     // Case: cooperativeFor(end, action)
@@ -60,7 +63,11 @@ export const cooperativeFor: CooperativeForType = (
       const batchStart = performance.now();
       // Run a batch of iterations without calling Date.now()
       for (let i = 0; i < batchSize && current < end; i++) {
-        const shouldBreak = action(current);
+        const actionReturnValue = action(current);
+        const shouldBreak =
+          actionReturnValue instanceof Promise
+            ? await actionReturnValue
+            : actionReturnValue;
         current += step;
 
         if (shouldBreak === true || current >= end) {

@@ -9,15 +9,17 @@ import { forEach } from "../forEach";
  */
 export const groupBy = async <T, U>(
   arrayOrPromise: T[] | Promise<T[]>,
-  callbackfn: (value: T, index: number, array: T[]) => U
+  callbackfn: (value: T, index: number, array: T[]) => Promise<U> | U
 ): Promise<Map<U, T[]>> => {
   const array =
     arrayOrPromise instanceof Promise ? await arrayOrPromise : arrayOrPromise;
 
   return cooperate(async () => {
     const result = new Map<U, T[]>();
-    await forEach(array, (value, index, array) => {
-      const key = callbackfn(value, index, array);
+    await forEach(array, async (value, index, array) => {
+      const returnValue = callbackfn(value, index, array);
+      const key =
+        returnValue instanceof Promise ? await returnValue : returnValue;
       const group = result.get(key);
       if (group) {
         group.push(value);

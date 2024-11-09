@@ -15,15 +15,22 @@ import { forEach } from "../forEach";
  */
 export const partition = async <T>(
   arrayOrPromise: T[] | Promise<T[]>,
-  callbackfn: (value: T, index: number, array: T[]) => boolean
+  callbackfn: (
+    value: T,
+    index: number,
+    array: T[]
+  ) => Promise<boolean> | boolean
 ): Promise<[T[], T[]]> => {
   const array =
     arrayOrPromise instanceof Promise ? await arrayOrPromise : arrayOrPromise;
 
   return cooperate(async () => {
     const result: [T[], T[]] = [[], []];
-    await forEach(array, (value, index, array) => {
-      if (callbackfn(value, index, array)) {
+    await forEach(array, async (value, index, array) => {
+      const returnValue = callbackfn(value, index, array);
+      const partitionValue =
+        returnValue instanceof Promise ? await returnValue : returnValue;
+      if (partitionValue) {
         result[0].push(value);
       } else {
         result[1].push(value);

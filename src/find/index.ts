@@ -16,16 +16,23 @@ import { cooperativeFor } from "../for";
  */
 export const find = async <T>(
   arrayOrPromise: T[] | Promise<T[]>,
-  callbackfn: (value: T, index: number, array: T[]) => boolean
+  callbackfn: (
+    value: T,
+    index: number,
+    array: T[]
+  ) => Promise<boolean> | boolean
 ): Promise<T | undefined> => {
   const array =
     arrayOrPromise instanceof Promise ? await arrayOrPromise : arrayOrPromise;
 
   return cooperate(async () => {
     let result: T | undefined;
-    await cooperativeFor(array.length, (i) => {
+    await cooperativeFor(array.length, async (i) => {
       const value = array[i];
-      if (callbackfn(value, i, array)) {
+      const returnValue = callbackfn(value, i, array);
+      const shouldBreak =
+        returnValue instanceof Promise ? await returnValue : returnValue;
+      if (shouldBreak) {
         result = value;
 
         // Stop the loop

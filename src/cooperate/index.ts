@@ -44,6 +44,7 @@ export const cooperate = <T = void>(
 
       // Save the cooperation status so we can restore it after the handoff
       const savedCooperationStatus = cooperationStatus;
+      cooperationStatus = null;
 
       return new Promise<void>((resolve) => {
         // Schedule a task that will resume the cooperation in the next "macrotask"

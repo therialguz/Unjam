@@ -1,13 +1,9 @@
 import { config } from "../config";
 import { cooperate, getCurrentCooperation } from "../cooperate";
 
-export type CooperativeWhileType = {
-  (condition: () => boolean, action: () => void): void;
-};
-
 export const cooperativeWhile = (
   condition: () => boolean,
-  action: () => void | Promise<void> | unknown
+  action: () => Promise<void | unknown> | void | unknown
 ) => {
   return cooperate(async (handoff) => {
     let startedAt = getCurrentCooperation().startedAt;

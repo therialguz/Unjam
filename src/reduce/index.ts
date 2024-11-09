@@ -22,7 +22,7 @@ export const reduce = async <T, U>(
     currentValue: T,
     currentIndex: number,
     array: T[]
-  ) => U,
+  ) => Promise<U> | U,
   initialValue: U
 ): Promise<U> => {
   const array =
@@ -30,8 +30,10 @@ export const reduce = async <T, U>(
 
   return cooperate(async () => {
     let accumulator = initialValue;
-    await forEach(array, (value, index, array) => {
-      accumulator = callbackfn(accumulator, value, index, array);
+    await forEach(array, async (value, index, array) => {
+      const returnValue = callbackfn(accumulator, value, index, array);
+      accumulator =
+        returnValue instanceof Promise ? await returnValue : returnValue;
     });
     return accumulator;
   });

@@ -20,7 +20,11 @@ import { forEach } from "../forEach";
  */
 export const compactMap = async <T, U>(
   arrayOrPromise: T[] | Promise<T[]>,
-  callbackfn: (value: T, index: number, array: T[]) => U | null | undefined
+  callbackfn: (
+    value: T,
+    index: number,
+    array: T[]
+  ) => Promise<U | null | undefined> | U | null | undefined
 ): Promise<U[]> => {
   const array =
     arrayOrPromise instanceof Promise ? await arrayOrPromise : arrayOrPromise;
@@ -28,8 +32,10 @@ export const compactMap = async <T, U>(
   return cooperate(async () => {
     const result: U[] = [];
 
-    await forEach(array, (value, index, array) => {
-      const mappedValue = callbackfn(value, index, array);
+    await forEach(array, async (value, index, array) => {
+      const returnValue = callbackfn(value, index, array);
+      const mappedValue =
+        returnValue instanceof Promise ? await returnValue : returnValue;
       if (mappedValue != null) {
         result.push(mappedValue);
       }

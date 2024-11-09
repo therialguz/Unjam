@@ -16,7 +16,11 @@ import { cooperativeFor } from "../for";
  */
 export const every = async <T>(
   arrayOrPromise: T[] | Promise<T[]>,
-  callbackfn: (value: T, index: number, array: T[]) => boolean
+  callbackfn: (
+    value: T,
+    index: number,
+    array: T[]
+  ) => Promise<boolean> | boolean
 ): Promise<boolean> => {
   const array =
     arrayOrPromise instanceof Promise ? await arrayOrPromise : arrayOrPromise;

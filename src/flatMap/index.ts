@@ -16,15 +16,18 @@ import { forEach } from "../forEach";
  */
 export const flatMap = async <T, U>(
   arrayOrPromise: T[] | Promise<T[]>,
-  callbackfn: (value: T, index: number, array: T[]) => U[]
+  callbackfn: (value: T, index: number, array: T[]) => Promise<U[]> | U[]
 ): Promise<U[]> => {
   const array =
     arrayOrPromise instanceof Promise ? await arrayOrPromise : arrayOrPromise;
 
   return cooperate(async () => {
     const result: U[] = [];
-    await forEach(array, (value, index, array) => {
-      result.push(...callbackfn(value, index, array));
+    await forEach(array, async (value, index, array) => {
+      const returnValue = callbackfn(value, index, array);
+      const mappedValue =
+        returnValue instanceof Promise ? await returnValue : returnValue;
+      result.push(...mappedValue);
     });
     return result;
   });

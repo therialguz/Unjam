@@ -9,15 +9,18 @@ import { forEach } from "../forEach";
  */
 export const map = async <T, U>(
   arrayOrPromise: T[] | Promise<T[]>,
-  callbackfn: (value: T, index: number, array: T[]) => U
+  callbackfn: (value: T, index: number, array: T[]) => Promise<U> | U
 ): Promise<U[]> => {
   const array =
     arrayOrPromise instanceof Promise ? await arrayOrPromise : arrayOrPromise;
 
   const result: U[] = [];
   return cooperate(async () => {
-    await forEach(array, (value, index, array) => {
-      result.push(callbackfn(value, index, array));
+    await forEach(array, async (value, index, array) => {
+      const resultValue = callbackfn(value, index, array);
+      const mappedValue =
+        resultValue instanceof Promise ? await resultValue : resultValue;
+      result.push(mappedValue);
     });
     return result;
   });

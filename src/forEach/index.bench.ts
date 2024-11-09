@@ -14,5 +14,13 @@ describe("forEach", () => {
       const result: number[] = [];
       array.forEach((item) => result.push(item));
     });
+
+    bench("forEach async", async () => {
+      const result: number[] = [];
+      await forEach(array, async (item) => {
+        await new Promise((resolve) => setTimeout(resolve, 1));
+        result.push(item);
+      });
+    });
   });
 });
