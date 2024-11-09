@@ -31,8 +31,8 @@
     "dist"
   ],
   "type": "module",
-  "types": "./dist/unjam.d.ts",
-  "module": "dist/unjam.mjs",
+  "types": "./dist/index.d.ts",
+  "module": "./dist/index.mjs",
   "exports": {
     ".": {
       "require": "./dist/index.cjs",
@@ -107,7 +107,7 @@
       "import": "./dist/zip/index.mjs"
     }
   },
-  "main": "dist/unjam.cjs",
+  "main": "./dist/index.cjs",
   "repository": {
     "type": "git",
     "url": "git@github.com:therialguz/Unjam.git"
