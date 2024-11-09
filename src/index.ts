@@ -13,4 +13,5 @@ export * from "./some";
 export * from "./while";
 export * from "./zip";
 
+export * from "./CancelError";
 export * from "./config";
