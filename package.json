@@ -110,7 +110,7 @@
   "main": "./dist/index.cjs",
   "repository": {
     "type": "git",
-    "url": "git@github.com:therialguz/Unjam.git"
+    "url": "git+ssh://git@github.com/therialguz/Unjam.git"
   },
   "scripts": {
     "dev": "vite",
