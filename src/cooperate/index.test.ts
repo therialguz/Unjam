@@ -105,7 +105,7 @@ describe("cooperate", () => {
       expect(fn).toHaveBeenCalledWith(new CancelError());
     });
 
-    it.only("should not start a cooperation if the signal is already aborted", async () => {
+    it("should not start a cooperation if the signal is already aborted", async () => {
       const abortController = new AbortController();
       abortController.abort();
       const callback = vi.fn(async () => {});
@@ -118,7 +118,5 @@ describe("cooperate", () => {
       await expect(promise).rejects.toThrow(new CancelError());
       expect(callback).not.toHaveBeenCalled();
     });
-
-    it.only("should ", () => {});
   });
 });
