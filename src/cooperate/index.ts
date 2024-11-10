@@ -67,6 +67,12 @@ export const cooperate = <T = void>(
         once: true,
         signal: signalEventListenerAbortController.signal,
       });
+
+      // Check if the signal has already been aborted and reject the promise if it has
+      if (signal.aborted) {
+        reject(new CancelError());
+        return;
+      }
     }
 
     // Start a new cooperation if one is not already in progress
@@ -110,7 +116,7 @@ export const cooperate = <T = void>(
 };
 
 /**
- * Gets the current cooperation ID and the time when the cooperation started.
+ * Gets the current cooperation.
  * @throws An error if no cooperation is in progress.
  * @returns A tuple containing the cooperation ID and the time when the cooperation started.
  */
