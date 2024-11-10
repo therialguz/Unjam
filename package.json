@@ -1,6 +1,6 @@
 {
   "name": "unjam",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Unjam is a JavaScript and TypeScript library offering non-blocking versions of common array methods like forEach, map, and filter. Designed for cooperative multitasking, Unjam keeps your application responsive, even with large data processing tasks, by preventing the main thread from being blocked. Perfect for smooth and efficient JavaScript execution in web applications.",
   "keywords": [
     "non-blocking",
