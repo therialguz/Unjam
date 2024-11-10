@@ -120,7 +120,7 @@
     "test": "vitest",
     "update-exports": "node scripts/update-exports.js",
     "docs": "typedoc --out docs src",
-    "prepublish": "npm run build && npm run docs",
+    "prepublishOnly": "npm run build && npm run docs",
     "bench": "vitest bench --run"
   },
   "devDependencies": {
